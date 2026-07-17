@@ -1,0 +1,45 @@
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+# --- Editors / IDE ---
+.idea/
+.vscode/
+*.iml
+*.swp
+
+# --- Node / TypeScript (desktop, protocol) ---
+node_modules/
+dist/
+build/
+*.tsbuildinfo
+.npm/
+.pnpm-store/
+
+# --- Android / Kotlin ---
+apps/android/.gradle/
+apps/android/local.properties
+apps/android/**/build/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# --- Rust / Tauri (desktop) ---
+apps/desktop/src-tauri/target/
+target/
+
+# --- Go (relay) ---
+apps/relay/bin/
+*.exe
+
+# --- Secrets / local env ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- Logs / temp ---
+*.log
+tmp/
