@@ -1,0 +1,12 @@
+# Self-host w 5 minut:
+#   docker compose up -d
+# i relay słucha na :8080. Ustaw RELAY_PUBLIC_URL na adres, pod którym
+# widzą go Twoje urządzenia (np. https://relay.twojadomena.pl).
+services:
+  relay:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      RELAY_PUBLIC_URL: "http://localhost:8080"
+    restart: unless-stopped

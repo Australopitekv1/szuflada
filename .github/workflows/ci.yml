@@ -26,6 +26,25 @@ jobs:
           pnpm --filter @szuflada/protocol gen:vectors
           git diff --exit-code packages/protocol/test-vectors/
 
+  relay:
+    name: Relay (Go) — vet + testy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.24"
+          cache-dependency-path: apps/relay/go.mod
+      - name: gofmt
+        working-directory: apps/relay
+        run: test -z "$(gofmt -l .)"
+      - name: go vet
+        working-directory: apps/relay
+        run: go vet ./...
+      - name: go test
+        working-directory: apps/relay
+        run: go test ./...
+
   crypto-jvm:
     name: Spike krypto (JVM / lazysodium)
     runs-on: ubuntu-latest

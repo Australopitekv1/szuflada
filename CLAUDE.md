@@ -21,7 +21,7 @@ Ten plik to skrócone konwencje — brief jest źródłem prawdy.
 
 - `apps/android` — Kotlin + Jetpack Compose (główna apka)
 - `apps/desktop` — Tauri 2 (Rust shell + TS/React frontend)
-- `apps/relay` — zero-knowledge relay server (Go vs Node — decyzja w Fazie 0)
+- `apps/relay` — zero-knowledge relay server (Go — [ADR 0001](docs/adr/0001-relay-in-go.md))
 - `packages/protocol` — wspólne schematy wiadomości (Zod + kotlinx.serialization
   z jednego źródła)
 

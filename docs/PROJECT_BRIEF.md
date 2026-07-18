@@ -163,8 +163,10 @@ z instrukcją self-host w 5 minut (target: społeczność r/selfhosted).
   `packages/protocol` (wspólne schematy wiadomości: Zod + kotlinx.serialization
   generowane z jednego źródła) — *schematy Zod gotowe; generacja
   kotlinx.serialization przy scaffoldingu `apps/android`*
-- [ ] Decyzja Go vs Node dla relaya (kryterium: łatwość self-host + WebSocket
-  przy 10k połączeń)
+- [x] Decyzja Go vs Node dla relaya (kryterium: łatwość self-host + WebSocket
+  przy 10k połączeń) — *Go, uzasadnienie w
+  [ADR 0001](adr/0001-relay-in-go.md); szkielet relaya z sesjami parowania
+  w `apps/relay`*
 - [x] Spike krypto: libsodium na Androidzie (lazysodium) i w Tauri — test
   wektorów między platformami. **To jest ryzyko #1 projektu — zrobić najpierw.**
   — *wektory RFC-anchored w `packages/protocol/test-vectors/`, zweryfikowane
