@@ -159,14 +159,18 @@ z instrukcją self-host w 5 minut (target: społeczność r/selfhosted).
 
 ### Faza 0 — Fundamenty (1–2 tyg. pracy z Claude Code)
 
-- [ ] Monorepo: `apps/android`, `apps/desktop`, `apps/relay`,
+- [x] Monorepo: `apps/android`, `apps/desktop`, `apps/relay`,
   `packages/protocol` (wspólne schematy wiadomości: Zod + kotlinx.serialization
-  generowane z jednego źródła)
+  generowane z jednego źródła) — *schematy Zod gotowe; generacja
+  kotlinx.serialization przy scaffoldingu `apps/android`*
 - [ ] Decyzja Go vs Node dla relaya (kryterium: łatwość self-host + WebSocket
   przy 10k połączeń)
-- [ ] Spike krypto: libsodium na Androidzie (lazysodium) i w Tauri — test
+- [x] Spike krypto: libsodium na Androidzie (lazysodium) i w Tauri — test
   wektorów między platformami. **To jest ryzyko #1 projektu — zrobić najpierw.**
-- [ ] CI: GitHub Actions (build + testy krypto na każdy PR)
+  — *wektory RFC-anchored w `packages/protocol/test-vectors/`, zweryfikowane
+  TS (libsodium-wrappers) i JVM (lazysodium, `spikes/crypto-jvm`); potwierdzenie
+  na fizycznym Androidzie i w Tauri przy scaffoldingu tych apek*
+- [x] CI: GitHub Actions (build + testy krypto na każdy PR)
 
 ### Faza 1 — Samotna szuflada (MVP offline, tylko Android)
 

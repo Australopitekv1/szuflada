@@ -23,8 +23,17 @@ nigdy nie widzi Twoich danych.
 | `apps/android` | Główna aplikacja — Kotlin + Jetpack Compose |
 | `apps/desktop` | Klient desktop — Tauri 2 (Rust + TS/React) |
 | `apps/relay` | Zero-knowledge relay server (self-hostowalny) |
-| `packages/protocol` | Wspólne schematy wiadomości sync/parowania |
+| `packages/protocol` | Wspólne schematy wiadomości sync/parowania + wektory testowe krypto |
+| `spikes/crypto-jvm` | Spike Fazy 0: zgodność libsodium TS ↔ JVM (lazysodium) ✅ |
 | `docs/` | Dokumentacja projektu ([brief](docs/PROJECT_BRIEF.md)) |
+
+## Rozwój
+
+```bash
+pnpm install
+pnpm test        # schematy protokołu + wektory krypto (TS)
+cd spikes/crypto-jvm && gradle test   # te same wektory przez lazysodium (JVM)
+```
 
 ## Status
 
