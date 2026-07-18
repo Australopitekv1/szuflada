@@ -30,6 +30,17 @@ interface ItemDao {
     @Query("UPDATE items SET deletedAt = :at, updatedAt = :at WHERE itemId = :id")
     suspend fun softDelete(id: String, at: Long)
 
+    /** Wyszukiwarka pełnotekstowa (tytuł, sklep, OCR). [match] w składni FTS4, np. "pralka*". */
+    @Query(
+        """
+        SELECT items.* FROM items
+        JOIN items_fts ON items.rowid = items_fts.rowid
+        WHERE items_fts MATCH :match AND items.deletedAt IS NULL
+        ORDER BY items.updatedAt DESC
+        """,
+    )
+    fun search(match: String): Flow<List<ItemEntity>>
+
     /** Do notyfikacji „gwarancja kończy się za 30 dni” — agregacja w SQL, nie w pętli. */
     @Query(
         """

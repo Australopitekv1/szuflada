@@ -7,6 +7,7 @@ import androidx.room.RoomDatabase
     entities = [
         VaultEntity::class,
         ItemEntity::class,
+        ItemFtsEntity::class,
         AttachmentEntity::class,
         DeviceEntity::class,
         SyncLogEntity::class,

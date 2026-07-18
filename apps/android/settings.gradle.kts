@@ -18,6 +18,7 @@ rootProject.name = "szuflada-android"
 
 include(":core:parsing")
 include(":core:protocol")
+include(":core:export")
 
 // :app wymaga Android SDK i dostępu do dl.google.com (AGP). W środowiskach
 // bez tego (sandbox, szybkie testy JVM) ustaw SZUFLADA_SKIP_ANDROID=1,

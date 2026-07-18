@@ -89,6 +89,18 @@ class ReceiptParserTest {
         assertNull(ReceiptParser.parse("żadnych liczb tutaj").totalGrosze)
     }
 
+    @Test
+    fun `parseAmountToGrosze - pole formularza`() {
+        assertEquals(4999L, ReceiptParser.parseAmountToGrosze("49,99"))
+        assertEquals(4999L, ReceiptParser.parseAmountToGrosze("49.99"))
+        assertEquals(249900L, ReceiptParser.parseAmountToGrosze("2 499,00"))
+        assertEquals(1200L, ReceiptParser.parseAmountToGrosze("12"))
+        assertEquals(249900L, ReceiptParser.parseAmountToGrosze("2 499"))
+        assertNull(ReceiptParser.parseAmountToGrosze(""))
+        assertNull(ReceiptParser.parseAmountToGrosze("abc"))
+        assertNull(ReceiptParser.parseAmountToGrosze("12,3"))
+    }
+
     // ── Daty ──────────────────────────────────────────────────────────────
 
     @Test

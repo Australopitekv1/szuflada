@@ -41,6 +41,19 @@ object ReceiptParser {
     private val amountRegex = Regex("""(\d{1,3}(?:[ .]\d{3})*|\d+)[,.](\d{2})(?!\d)""")
 
     /**
+     * Parsuje pojedynczą kwotę z pola formularza ("49,99", "2 499.00", "12")
+     * na grosze. Do ręcznej edycji — nie do skanowania całych paragonów.
+     */
+    fun parseAmountToGrosze(input: String): Long? {
+        val t = input.trim()
+        if (t.isEmpty()) return null
+        amountRegex.matchEntire(t)?.let { return toGrosze(it) }
+        // Całe złote bez groszy: "12", "2 499"
+        val whole = Regex("""(\d{1,3}(?:[ .]\d{3})*|\d+)""").matchEntire(t) ?: return null
+        return whole.groupValues[1].replace(" ", "").replace(".", "").toLongOrNull()?.times(100)
+    }
+
+    /**
      * Słowa kluczowe linii z kwotą całkowitą, w kolejności priorytetu.
      * "SUMA PLN" na paragonie fiskalnym to kwota transakcji.
      */

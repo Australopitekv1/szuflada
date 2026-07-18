@@ -2,6 +2,7 @@ package app.szuflada.data.db
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Fts4
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
@@ -58,6 +59,20 @@ data class ItemEntity(
     val updatedAt: Long,
     /** Soft delete — wymagany przez sync (oplog). */
     val deletedAt: Long? = null,
+)
+
+/**
+ * Indeks pełnotekstowy nad items — wyszukiwarka po tytule, sklepie
+ * i tekście OCR. Room utrzymuje synchronizację triggerami (contentEntity).
+ * Uwaga: Room wspiera FTS4 (nie FTS5) — świadome odstępstwo od briefu,
+ * funkcjonalnie równoważne dla MVP.
+ */
+@Fts4(contentEntity = ItemEntity::class)
+@Entity(tableName = "items_fts")
+data class ItemFtsEntity(
+    val title: String,
+    val merchant: String?,
+    val ocrText: String?,
 )
 
 @Entity(
