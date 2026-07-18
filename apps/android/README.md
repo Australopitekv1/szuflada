@@ -2,20 +2,35 @@
 
 Główna aplikacja Szuflady — **Kotlin + Jetpack Compose**, Android-first.
 
-## Stack
+## Moduły
 
-- Jetpack Compose (UI)
-- Room + SQLCipher (lokalna, zaszyfrowana baza)
-- Google ML Kit Text Recognition v2 (on-device OCR)
-- coroutines + Flow, DI przez Hilt (brak LiveData)
-- libsodium przez lazysodium (krypto)
+| Moduł | Opis | Testowalny bez SDK |
+| --- | --- | --- |
+| `:app` | Aplikacja: Compose, Hilt, Room + SQLCipher (encje sekcji 3 briefu) | nie (CI buduje APK) |
+| `:core:parsing` | Parser OCR polskich paragonów: kwota (grosze), data, NIP z sumą kontrolną, sklep | tak |
+| `:core:protocol` | Wiadomości protokołu (kotlinx.serialization) + walidacja lustrzana do Zod | tak |
 
-## Zakres (Faza 1 — MVP offline)
+## Rozwój bez Android SDK
 
-- Model danych z sekcji 3 briefu (Room + SQLCipher)
-- Dodawanie paragonu: zdjęcie → ML Kit OCR → auto-parsowanie (kwota, data, NIP)
-- Lista + wyszukiwarka FTS5 po `ocr_text`
-- Pola gwarancji/zwrotu + lokalne notyfikacje
-- Eksport ZIP (RODO)
+W środowiskach bez SDK / dostępu do dl.google.com (sandbox):
 
-> Skeleton — implementacja nie została jeszcze rozpoczęta.
+```bash
+SZUFLADA_SKIP_ANDROID=1 gradle test
+```
+
+buduje i testuje wyłącznie moduły JVM. Pełny build robi CI (job `android`).
+
+## Zgodność protokołu
+
+`:core:protocol` NIE jest ręczną kopią schematów: test konformancji konsumuje
+`packages/protocol/test-fixtures/protocol-fixtures.json` (generowane z Zod —
+źródła prawdy) i wymusza identyczną ocenę każdego przypadku valid/invalid.
+
+## Stan Fazy 1
+
+- [x] Encje + DAO modelu danych (sekcja 3), SQLCipher przez `SupportOpenHelperFactory`
+- [x] Auto-parsowanie paragonu (kwota, data, NIP) — `:core:parsing`
+- [ ] Klucz bazy z Android Keystore (teraz: efemeryczny scaffold — patrz `DbKeyProvider`)
+- [ ] Zdjęcie → ML Kit OCR (wymaga urządzenia)
+- [ ] Wyszukiwarka FTS po `ocr_text`
+- [ ] Notyfikacje gwarancji, eksport ZIP (RODO)

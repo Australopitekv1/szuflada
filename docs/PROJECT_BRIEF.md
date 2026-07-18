@@ -176,9 +176,11 @@ z instrukcją self-host w 5 minut (target: społeczność r/selfhosted).
 
 ### Faza 1 — Samotna szuflada (MVP offline, tylko Android)
 
-- [ ] Room + SQLCipher, model danych z sekcji 3
+- [ ] Room + SQLCipher, model danych z sekcji 3 — *encje + DAO + SupportFactory
+  gotowe; pozostaje klucz bazy z Android Keystore (teraz efemeryczny scaffold)*
 - [ ] Dodawanie paragonu: zdjęcie → ML Kit OCR → auto-parsowanie (kwota, data,
-  NIP sprzedawcy — regexy na polskie formaty paragonów)
+  NIP sprzedawcy — regexy na polskie formaty paragonów) — *parser z testami
+  gotowy (`:core:parsing`); pozostaje flow aparat → ML Kit*
 - [ ] Lista + wyszukiwarka FTS5 po `ocr_text`
 - [ ] Pola gwarancji/zwrotu + lokalne notyfikacje („gwarancja kończy się za 30
   dni”)
