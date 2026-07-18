@@ -1,20 +1,35 @@
-# packages/protocol
+# @szuflada/protocol
 
-Wspólne schematy wiadomości protokołu (parowanie QR + sync).
+Wspólne schematy wiadomości protokołu (parowanie QR + sync) oraz kanoniczne
+wektory testowe krypto.
 
-## Cel
+## Zawartość
 
-Jedno źródło prawdy dla schematów wiadomości, z którego generowane są:
+- `src/pairing.ts` — wiadomości protokołu parowania QR (sekcja 4 briefu):
+  `PairingQrPayload`, `PairingJoin`, `PairingConfirm`
+- `src/sync.ts` — kanał sync na relayu (sekcja 5): auth challenge-response
+  (Ed25519), `push_ops` / `pull_ops` / `presence`, koperty `SyncOp`
+- `src/common.ts` — typy bazowe: hex, klucze, nonce, ULID, `EncryptedEnvelope`
+- `src/crypto-vectors.ts` — schemat pliku wektorów testowych
+- `test-vectors/crypto-vectors.json` — **kanoniczne wektory krypto** (X25519,
+  XChaCha20-Poly1305-IETF, Ed25519), zakotwiczone o RFC 7748 i RFC 8032;
+  jedno źródło prawdy dla TS, JVM (lazysodium) i Rust
 
-- **Zod** — dla części webowej/desktop (TypeScript, walidacja na granicach I/O)
-- **kotlinx.serialization** — dla Androida (Kotlin)
+Wszystkie schematy: Zod, `strict()` — nieznane pola są odrzucane na każdej
+granicy I/O.
 
-Dzięki temu telefon, desktop i relay mówią dokładnie tym samym protokołem,
-a niezgodności wychodzą na etapie kompilacji, nie w produkcji.
+## Komendy
 
-## Zakres
+```bash
+pnpm test          # testy schematów + weryfikacja wektorów (libsodium-wrappers)
+pnpm typecheck
+pnpm gen:vectors   # regeneracja wektorów (asserty RFC muszą przejść)
+```
 
-Schematy z sekcji 4 (parowanie) i sekcji 5 (sync/relay) briefu:
-wiadomości `push_ops`, `pull_ops`, `presence`, koperty parowania, wrapped keys.
+Wektory w repo muszą być bajt w bajt tym, co produkuje generator — pilnuje
+tego CI.
 
-> Skeleton — implementacja nie została jeszcze rozpoczęta.
+## Kotlin (kotlinx.serialization)
+
+Generacja schematów Kotlin z tego źródła — otwarty krok Fazy 0 (zrobimy przy
+scaffoldingu `apps/android`, żeby generować od razu do właściwego modułu).
