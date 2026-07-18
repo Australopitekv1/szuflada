@@ -36,5 +36,7 @@ buduje i testuje wyłącznie moduły JVM. Pełny build robi CI (job `android`).
 - [x] Eksport ZIP (RODO) — `:core:export` + przycisk na ekranie głównym (SAF)
 - [x] Klucz bazy z Android Keystore — DEK opakowany sprzętowym KEK (AES-GCM),
   wrapped blob w `noBackupFilesDir` (`KeystoreDbKeyProvider`)
+- [x] Notyfikacje gwarancji ("kończy się za 30 dni") — codzienny
+  `WarrantyCheckWorker` (WorkManager + Hilt)
 - [ ] Zdjęcie → ML Kit OCR (wymaga urządzenia)
-- [ ] Notyfikacje gwarancji ("kończy się za 30 dni")
+- [ ] Recovery phrase (BIP39) przy onboardingu
