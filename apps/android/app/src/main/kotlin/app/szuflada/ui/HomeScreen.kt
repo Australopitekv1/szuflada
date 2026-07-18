@@ -1,5 +1,7 @@
 package app.szuflada.ui
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,10 +16,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -30,6 +34,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -58,6 +63,10 @@ private fun HomeScreen(viewModel: HomeViewModel, onAddClick: () -> Unit) {
     val query by viewModel.query.collectAsStateWithLifecycle()
     val items by viewModel.items.collectAsStateWithLifecycle()
 
+    val exportLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.CreateDocument("application/zip"),
+    ) { uri -> uri?.let(viewModel::exportTo) }
+
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(onClick = onAddClick) {
@@ -68,11 +77,23 @@ private fun HomeScreen(viewModel: HomeViewModel, onAddClick: () -> Unit) {
         Column(
             modifier = Modifier.fillMaxSize().padding(padding).padding(horizontal = 16.dp),
         ) {
-            Text(
-                "Szuflada",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(vertical = 12.dp),
-            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    "Szuflada",
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(vertical = 12.dp).weight(1f),
+                )
+                IconButton(
+                    onClick = {
+                        exportLauncher.launch("szuflada-export-${LocalDate.now()}.zip")
+                    },
+                ) {
+                    Icon(Icons.Filled.Share, contentDescription = "Eksport wszystkich danych (ZIP)")
+                }
+            }
             OutlinedTextField(
                 value = query,
                 onValueChange = viewModel::onQueryChange,

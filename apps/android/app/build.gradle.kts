@@ -41,6 +41,8 @@ android {
 dependencies {
     implementation(project(":core:parsing"))
     implementation(project(":core:protocol"))
+    implementation(project(":core:export"))
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

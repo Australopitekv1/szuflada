@@ -26,6 +26,9 @@ interface ItemDao {
     @Query("SELECT * FROM items WHERE deletedAt IS NULL ORDER BY updatedAt DESC")
     fun observeAll(): Flow<List<ItemEntity>>
 
+    @Query("SELECT * FROM items WHERE deletedAt IS NULL ORDER BY createdAt")
+    suspend fun getAllActive(): List<ItemEntity>
+
     /** Soft delete — deletedAt zostaje w bazie dla oplogu sync. */
     @Query("UPDATE items SET deletedAt = :at, updatedAt = :at WHERE itemId = :id")
     suspend fun softDelete(id: String, at: Long)
@@ -61,6 +64,9 @@ interface AttachmentDao {
 
     @Query("SELECT * FROM attachments WHERE itemId = :itemId")
     suspend fun forItem(itemId: String): List<AttachmentEntity>
+
+    @Query("SELECT * FROM attachments")
+    suspend fun getAll(): List<AttachmentEntity>
 }
 
 @Dao

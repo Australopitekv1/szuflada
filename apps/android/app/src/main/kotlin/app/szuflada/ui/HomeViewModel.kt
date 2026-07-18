@@ -1,8 +1,10 @@
 package app.szuflada.ui
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.szuflada.core.parsing.ReceiptParser
+import app.szuflada.data.ExportService
 import app.szuflada.data.ItemRepository
 import app.szuflada.data.db.ItemEntity
 import app.szuflada.data.db.ItemType
@@ -32,7 +34,13 @@ data class AddItemForm(
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val repository: ItemRepository,
+    private val exportService: ExportService,
 ) : ViewModel() {
+
+    /** Eksport ZIP (RODO) pod URI wybrane przez użytkownika (SAF). */
+    fun exportTo(uri: Uri) {
+        viewModelScope.launch { exportService.exportTo(uri) }
+    }
 
     private val _query = MutableStateFlow("")
     val query: StateFlow<String> = _query

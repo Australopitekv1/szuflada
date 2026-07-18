@@ -15,7 +15,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 abstract class DbKeyModule {
     @Binds
-    abstract fun bindDbKeyProvider(impl: EphemeralDbKeyProvider): DbKeyProvider
+    abstract fun bindDbKeyProvider(impl: KeystoreDbKeyProvider): DbKeyProvider
 }
 
 @Module

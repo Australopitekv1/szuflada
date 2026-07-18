@@ -33,7 +33,8 @@ buduje i testuje wyłącznie moduły JVM. Pełny build robi CI (job `android`).
 - [x] Auto-parsowanie paragonu (kwota, data, NIP) — `:core:parsing`
 - [x] Wyszukiwarka FTS (tytuł, sklep, `ocr_text`) + lista i ekran dodawania
   (wklejenie tekstu paragonu → auto-fill z parsera)
-- [x] Logika eksportu ZIP (RODO) — `:core:export` (UI z SAF: kolejny krok)
-- [ ] Klucz bazy z Android Keystore (teraz: efemeryczny scaffold — patrz `DbKeyProvider`)
+- [x] Eksport ZIP (RODO) — `:core:export` + przycisk na ekranie głównym (SAF)
+- [x] Klucz bazy z Android Keystore — DEK opakowany sprzętowym KEK (AES-GCM),
+  wrapped blob w `noBackupFilesDir` (`KeystoreDbKeyProvider`)
 - [ ] Zdjęcie → ML Kit OCR (wymaga urządzenia)
 - [ ] Notyfikacje gwarancji ("kończy się za 30 dni")
