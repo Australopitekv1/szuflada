@@ -14,7 +14,8 @@
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "vitest run",
-    "gen:vectors": "tsx scripts/generate-crypto-vectors.ts"
+    "gen:vectors": "tsx scripts/generate-crypto-vectors.ts",
+    "gen:fixtures": "tsx scripts/generate-protocol-fixtures.ts"
   },
   "dependencies": {
     "zod": "^3.24.0"

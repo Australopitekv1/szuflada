@@ -1,0 +1,366 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "schema": "PairingQrPayload",
+      "valid": [
+        {
+          "v": 1,
+          "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+          "relayUrl": "https://relay.szuflada.app",
+          "pkD": "abababababababababababababababababababababababababababababababab"
+        },
+        {
+          "v": 1,
+          "sessionId": "0d1c2b3a-4958-4677-8899-aabbccddeeff",
+          "relayUrl": "http://localhost:8080",
+          "pkD": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+        }
+      ],
+      "invalid": [
+        {
+          "reason": "nieznane pole (strict)",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "https://r.example",
+            "pkD": "abababababababababababababababababababababababababababababababab",
+            "evil": "x"
+          }
+        },
+        {
+          "reason": "zła wersja protokołu",
+          "data": {
+            "v": 2,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "https://r.example",
+            "pkD": "abababababababababababababababababababababababababababababababab"
+          }
+        },
+        {
+          "reason": "klucz za krótki (31 bajtów)",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "https://r.example",
+            "pkD": "ababababababababababababababababababababababababababababababab"
+          }
+        },
+        {
+          "reason": "hex wielkimi literami",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "https://r.example",
+            "pkD": "ABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABABAB"
+          }
+        },
+        {
+          "reason": "relayUrl nie jest URL-em",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "not-a-url",
+            "pkD": "abababababababababababababababababababababababababababababababab"
+          }
+        },
+        {
+          "reason": "sessionId nie jest UUID",
+          "data": {
+            "v": 1,
+            "sessionId": "not-a-uuid",
+            "relayUrl": "https://r.example",
+            "pkD": "abababababababababababababababababababababababababababababababab"
+          }
+        },
+        {
+          "reason": "brak pola pkD",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "relayUrl": "https://r.example"
+          }
+        }
+      ]
+    },
+    {
+      "schema": "PairingJoin",
+      "valid": [
+        {
+          "v": 1,
+          "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+          "pkP": "abababababababababababababababababababababababababababababababab",
+          "wrappedVaultKey": {
+            "nonce": "010101010101010101010101010101010101010101010101",
+            "ciphertext": "deadbeef"
+          },
+          "phoneSigningPk": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+        }
+      ],
+      "invalid": [
+        {
+          "reason": "pusty ciphertext",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "pkP": "abababababababababababababababababababababababababababababababab",
+            "wrappedVaultKey": {
+              "nonce": "010101010101010101010101010101010101010101010101",
+              "ciphertext": ""
+            },
+            "phoneSigningPk": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          }
+        },
+        {
+          "reason": "ciphertext o nieparzystej liczbie znaków hex",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "pkP": "abababababababababababababababababababababababababababababababab",
+            "wrappedVaultKey": {
+              "nonce": "010101010101010101010101010101010101010101010101",
+              "ciphertext": "abc"
+            },
+            "phoneSigningPk": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          }
+        },
+        {
+          "reason": "nonce za krótki (23 bajty)",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "pkP": "abababababababababababababababababababababababababababababababab",
+            "wrappedVaultKey": {
+              "nonce": "0101010101010101010101010101010101010101010101",
+              "ciphertext": "deadbeef"
+            },
+            "phoneSigningPk": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          }
+        },
+        {
+          "reason": "nieznane pole w kopercie (strict)",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "pkP": "abababababababababababababababababababababababababababababababab",
+            "wrappedVaultKey": {
+              "nonce": "010101010101010101010101010101010101010101010101",
+              "ciphertext": "deadbeef",
+              "plaintext": "oops"
+            },
+            "phoneSigningPk": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd"
+          }
+        }
+      ]
+    },
+    {
+      "schema": "PairingConfirm",
+      "valid": [
+        {
+          "v": 1,
+          "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+          "signingPk": "abababababababababababababababababababababababababababababababab",
+          "deviceName": "Pixel Kacpra",
+          "signature": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+        }
+      ],
+      "invalid": [
+        {
+          "reason": "pusta nazwa urządzenia",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "signingPk": "abababababababababababababababababababababababababababababababab",
+            "deviceName": "",
+            "signature": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+          }
+        },
+        {
+          "reason": "nazwa urządzenia > 64 znaki",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "signingPk": "abababababababababababababababababababababababababababababababab",
+            "deviceName": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+            "signature": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+          }
+        },
+        {
+          "reason": "podpis za krótki (63 bajty)",
+          "data": {
+            "v": 1,
+            "sessionId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+            "signingPk": "abababababababababababababababababababababababababababababababab",
+            "deviceName": "Laptop",
+            "signature": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+          }
+        }
+      ]
+    },
+    {
+      "schema": "ClientMessage",
+      "valid": [
+        {
+          "type": "push_ops",
+          "ops": [
+            {
+              "opId": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+              "authorDeviceId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+              "payload": {
+                "nonce": "010101010101010101010101010101010101010101010101",
+                "ciphertext": "deadbeef"
+              }
+            },
+            {
+              "opId": "01BX5ZZKBKACTAV9WEVGEMMVRZ",
+              "authorDeviceId": "0d1c2b3a-4958-4677-8899-aabbccddeeff",
+              "payload": {
+                "nonce": "010101010101010101010101010101010101010101010101",
+                "ciphertext": "cafebabe"
+              }
+            }
+          ]
+        },
+        {
+          "type": "pull_ops",
+          "sinceUlid": "01ARZ3NDEKTSV4RRFFQ69G5FAV"
+        },
+        {
+          "type": "pull_ops",
+          "sinceUlid": null
+        },
+        {
+          "type": "presence",
+          "status": "online"
+        },
+        {
+          "type": "auth_response",
+          "deviceId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+          "signingPk": "abababababababababababababababababababababababababababababababab",
+          "signature": "efefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefef"
+        }
+      ],
+      "invalid": [
+        {
+          "reason": "nieznany typ wiadomości",
+          "data": {
+            "type": "drop_table"
+          }
+        },
+        {
+          "reason": "push_ops z pustą listą",
+          "data": {
+            "type": "push_ops",
+            "ops": []
+          }
+        },
+        {
+          "reason": "zły ULID (znak I spoza Crockford base32)",
+          "data": {
+            "type": "pull_ops",
+            "sinceUlid": "01ARZ3NDEKTSV4RRFFQ69G5FAI"
+          }
+        },
+        {
+          "reason": "ULID małymi literami",
+          "data": {
+            "type": "pull_ops",
+            "sinceUlid": "01arz3ndektsv4rrffq69g5fav"
+          }
+        },
+        {
+          "reason": "presence z nieznanym statusem",
+          "data": {
+            "type": "presence",
+            "status": "away"
+          }
+        },
+        {
+          "reason": "nieznane pole (strict)",
+          "data": {
+            "type": "presence",
+            "status": "online",
+            "extra": 1
+          }
+        },
+        {
+          "reason": "brak pola type",
+          "data": {
+            "sinceUlid": null
+          }
+        }
+      ]
+    },
+    {
+      "schema": "ServerMessage",
+      "valid": [
+        {
+          "type": "auth_challenge",
+          "challenge": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        },
+        {
+          "type": "ops",
+          "ops": [
+            {
+              "opId": "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+              "authorDeviceId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+              "payload": {
+                "nonce": "010101010101010101010101010101010101010101010101",
+                "ciphertext": "deadbeef"
+              }
+            }
+          ],
+          "hasMore": false
+        },
+        {
+          "type": "ops",
+          "ops": [],
+          "hasMore": true
+        },
+        {
+          "type": "push_ack",
+          "accepted": [
+            "01ARZ3NDEKTSV4RRFFQ69G5FAV",
+            "01BX5ZZKBKACTAV9WEVGEMMVRZ"
+          ]
+        },
+        {
+          "type": "peer_presence",
+          "deviceId": "b7e14ab8-6f1e-4b0a-9b0a-3c9d2f9a1e42",
+          "status": "offline"
+        },
+        {
+          "type": "error",
+          "code": "quota_exceeded",
+          "message": "limit 500 MB przekroczony"
+        }
+      ],
+      "invalid": [
+        {
+          "reason": "nieznany kod błędu",
+          "data": {
+            "type": "error",
+            "code": "teapot",
+            "message": "..."
+          }
+        },
+        {
+          "reason": "ops bez pola hasMore",
+          "data": {
+            "type": "ops",
+            "ops": []
+          }
+        },
+        {
+          "reason": "push_ack ze złym ULID-em",
+          "data": {
+            "type": "push_ack",
+            "accepted": [
+              "nie-ulid"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
